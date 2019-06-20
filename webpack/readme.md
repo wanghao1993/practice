@@ -39,4 +39,8 @@ output: {
  有三个值 'production', 'development', 'none'
  开启不同模式的时候会默认开启不同的插件
  如图：
- 
+ ![区别](https://github.com/wanghao1993/practice/blob/master/webpack/1560840621214.jpg)
+
+### mudule
+rules 中存在各种loader
+babel-loader负责解析es6，css-loader解析css url-loader解析字体和图片等，还有sass-loader解析sass

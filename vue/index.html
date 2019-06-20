@@ -7,10 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="root">
-
+    <div id="mvvm">
+    <input v-model="text" id="test"></input>
+        <div id="test1">
+            {{ text }}
+        </div>
     </div>
-    <script src="./dist/index.js"></script>
-    <script src="./dist/search.js"></script>
+    <script src="./dist/main.js"></script>
 </body>
 </html>
