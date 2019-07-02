@@ -35,5 +35,13 @@ module.exports = {
                 }]
             }
         ]
+    },
+    watch: true,
+    watchOptions: {
+        ignored: /node_modules/,
+        // 监听到变化后300ms后执行
+        aggregateTimeout: 300,
+        // 一秒钟检测1000次
+        poll: 1000
     }
 }

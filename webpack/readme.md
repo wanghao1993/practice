@@ -44,3 +44,19 @@ output: {
 ### mudule
 rules 中存在各种loader
 babel-loader负责解析es6，css-loader解析css url-loader解析字体和图片等，还有sass-loader解析sass
+
+### 文件监听
+webpack开启监听的方式有两种：
+    1.启动的时候加上--watch
+    2.config中设置watch：true
+```js
+    watch: true,
+    watchOptions: {
+        ignored: /node_modules/,
+        // 监听到变化后300ms后执行
+        aggregateTimeout: 300,
+        // 一秒钟检测1000次
+        poll: 1000
+    }
+```
+### 
