@@ -4,7 +4,7 @@ import './search.scss'
 import logo from './../logo.jpg'
 class Search extends React.Component {
     render() {
-        return <div>Search text <img src={ logo } alt=""/></div>
+        return <div>Search tsswwws222ext <img src={ logo } alt=""/></div>
     }
 }
 ReactDom.render(<Search />,

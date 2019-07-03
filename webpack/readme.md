@@ -59,4 +59,80 @@ webpack开启监听的方式有两种：
         poll: 1000
     }
 ```
-### 
+### 热更新
+1.安装webpack-dev-server;
+2.在package.json 中配置 npm script
+```js
+"dev": "webpack-dev-server --open"
+```
+3.webpack.config.js中设置devserver
+```js
+plugins: [
+    new webpack.HotModuleReplacementPlugin()
+],
+devServer: {
+    contentBase: './dist',
+    hot: true
+},
+webpack.HotModuleReplacementPlugin当设置hot 为true的时候会自动加入
+```
+
+### 文件指纹
+作用：项目发布时，为了解决缓存，需要进行md5签名，这时候就需要用到 hash 和 chunkhash等。
+hash：和整个项目,只有项目文件修改就会改变；
+chunkhash：和webpack打包的chunk有关，不同的entry会生成不同的chunkhash；
+contenthash: 根据文件内容来定义hash，文件内容不变，这contenthash不变；
+注意：这里需要注意的是，不能随便使用；否则可能会导致不更新的问题；js用chunkhash，css用contenthash
+```js
+output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name]_[chunkhash:8].js'
+},
+{
+    test: /\.(png|jpg|jpeg|gif)$/,
+    use: [{
+        loader: 'file-loader',
+        options: {
+            // limit: 10240,
+            name: '[name][hash:8].[ext]'
+        }
+    }]
+},
+plugins: [
+    new miniCssExtractPlugin({
+        filename: '[name]_[contenthash:8].css'
+    })
+]
+```
+
+### 文件压缩
+1.css压缩
+```css
+new optimizeCssAssetsWebpackPlugin({
+    assetNameRegExp: /\.css$/g,
+    cssProcessor:require('cssnano')
+})
+需要安装optimizeCssAssetsWebpackPlugin和cssnano插件
+```
+2.js 
+webpack4默认开启
+3.html压缩
+```js
+new htmlWebpackPlugin({
+    template: path.join(__dirname, 'src/search.html'),
+    filename: 'search.html',
+    chunks: ['search'],
+    inject: true,
+    minify: {
+        html5: true,
+        // 去掉空格
+        collapseWhitespace: true,
+        preserveLineBreaks: false,
+        // 压缩内联的css和js
+        minifyCSS: true,
+        minifyJS: true,
+        // 移除注释
+        removeComments: false
+    }
+})
+```

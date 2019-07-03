@@ -1,16 +1,19 @@
 'use strict'
 
 const path = require('path')
+const webpack = require('webpack')
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: {
         index: './src/index.js',
         search: './src/search.js'
     },
+    // 输入目录和名称
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name]_[chunkhash:8].js'
     },
+    // 解析规则
     module: {
         rules: [
             {
@@ -28,14 +31,24 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 use: [{
-                    loader: 'url-loader',
+                    loader: 'file-loader',
                     options: {
-                        limit: 10240
+                        // limit: 10240,
+                        name: '[name][hash:8].[ext]'
                     }
                 }]
             }
         ]
     },
+    // 热更新
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        contentBase: './dist',
+        hot: true
+    },
+    // watch文件的变化
     watch: true,
     watchOptions: {
         ignored: /node_modules/,
