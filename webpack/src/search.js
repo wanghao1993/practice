@@ -7,5 +7,6 @@ class Search extends React.Component {
         return <div>Search tsswwws222ext <img src={ logo } alt=""/></div>
     }
 }
+console.log(111)
 ReactDom.render(<Search />,
     document.getElementById('root'))

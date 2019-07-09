@@ -1,4 +1,6 @@
 $font: green;
 #root {
-    background: $font
+    font-size: 14px;
+    background: $font;
+    display: flex;
 }

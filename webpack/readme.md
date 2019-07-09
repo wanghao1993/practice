@@ -1,3 +1,4 @@
+## webpack基础
 ### entry
 入口，可以设置多入口和单入口
 ```js
@@ -136,3 +137,66 @@ new htmlWebpackPlugin({
     }
 })
 ```
+## webpack进阶用法
+### 自动清理构建目标产物
+1.通过npm script 清理 "rm -rm ./dist && webpack"
+        
+    打包前先清空dist
+2.通过clean-webpack-plugin，具体参数请看[clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
+
+### postcss插件autoprefixer自动补齐css3前缀
+1.安装postcss-loader和autoprefixer插件
+2.在package.json中配置'browserslist'或者创建'.browserslistrc'也是可以的
+```js
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+```
+3.在webpack.prod.js中配置
+```js
+{
+    test: /\.scss$/,
+    use: [miniCssExtractPlugin.loader, 'css-loader','sass-loader', {
+        loader: 'postcss-loader',
+        options: {
+            plugins: () => [
+                require('autoprefixer')
+            ]
+        }
+    }]
+}
+```
+[postcss相关配置项](https://www.npmjs.com/package/postcss-loader#plugins)
+
+### 移动端css px转rem
+这里需要解决px2rem-loader里计算，还需要动态计算页面根元素的font-size的大小
+1.npm i px2rem-loader -D  
+2.npm i lib-flexible -S  
+3.webpack中配置如下
+```js
+{
+    test: /\.scss$/,
+    use: [miniCssExtractPlugin.loader, 'css-loader','sass-loader', {
+        loader: 'postcss-loader',
+        options: {
+            plugins: () => [
+                require('autoprefixer')
+            ]
+        }
+    }, {
+        loader: 'px2rem-loader',
+        options: {
+            remUnit: 75, // 1rem = 75px;
+            remPrecesion: 8 // 小数点保留位数
+        }
+    }]
+}
+```
+4.html 文件中引入lib-flexible.js
+```js
+<script src="../node_modules/lib-flexible/flexible.js"></script>
+```
+这里需要放在头部，因为需要一开始就计算好根元素的font-size
+
+5.如果不希望转换的话在后面加上 /* no */的注释

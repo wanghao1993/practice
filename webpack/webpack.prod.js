@@ -4,6 +4,7 @@ const path = require('path')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
@@ -29,7 +30,20 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [miniCssExtractPlugin.loader, 'css-loader','sass-loader']
+                use: [miniCssExtractPlugin.loader, 'css-loader','sass-loader', {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: () => [
+                            require('autoprefixer')
+                        ]
+                    }
+                }, {
+                    loader: 'px2rem-loader',
+                    options: {
+                        remUnit: 75, // 1rem = 75px;
+                        remPrecesion: 8 // 小数点保留位数
+                    }
+                }]
             },
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
@@ -80,6 +94,7 @@ module.exports = {
                 minifyJS: true,
                 removeComments: false
             }
-        })
+        }),
+        new CleanWebpackPlugin()
     ]
 }
