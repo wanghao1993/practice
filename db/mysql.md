@@ -198,6 +198,7 @@
         |  1 | 姓名   |
         +----+--------+
 
+
 #### 3.2.8 删除数据
         # 语法：DELETE FROM 表名 [WHERE 表达式];
         mysql> DELETE FROM user WHERE name = '姓名';
