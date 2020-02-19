@@ -14,7 +14,7 @@ Object.defineProperty(obj, 'hello', {
 ```
 3.Vue初始化（虚拟节点的产生和编译）
 
-3.1Vue虚拟节点容器
+3.1 Vue虚拟节点容器
 ```js
 function nodeContainer(node, vm, flag) {
     var flag = flag || document.createDocumentFragment()
@@ -37,7 +37,7 @@ function nodeContainer(node, vm, flag) {
 ```js
 function Vue(options) {
     this.data = options.data
-    
+
     var id = options.el
     var dom = nodeContainer(document.getElementById(id), this);
     document.getElementById(id).appendChild(dom)
