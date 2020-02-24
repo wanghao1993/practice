@@ -2,6 +2,7 @@
 1.Vue通过采用Obejct.defineProperty给对象设置get和set来劫持变化，从而触发订阅-发布者模式，触发watcher，从而改变虚拟dom，然后更新虚拟dom，最后渲染真实dom
 2.
 ```js
+
 var obj = {}
 Object.defineProperty(obj, 'hello', {
     get: function() {
