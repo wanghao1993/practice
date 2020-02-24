@@ -1,244 +1,298 @@
+# 列的属性
 
-# 为什么我们需要数据库
-
-## 以下观点纯属个人看法
-在没有计算机的时候，人们记账通常使用小本本，记账，从古时候的账本，到小时候父母们记录电话号码，或者我们写的日记都是记在小本本上的。
-
-但是这样子存在一个问题，如果数据量巨大怎么办？或者我需要从大量数据中检索我想要的信息咋办呢？
-
-所以人们发明了一种专门的软件来管理存储的数据，这些数据依照一定格式保存，通过这个软件可以方便的对数据进行增删改查操作，从而极大的提升了数据管理效率，人们就把这个管理数据的软件叫做数据库管理系统（英文：Database Management System，简称：DBMS）
-
-# 第一步 开机混底薪
-
-1.打开 https://dev.mysql.com/downloads/file/?id=492745 下载安装包，本人是mac的，所一下的时候选择合适自己的安装包；
-
-2.【MySQL安装（Mac版】https://juejin.im/post/5cc2a52ce51d456e7079f27f
-这篇文章有介绍mac安装的两种方式～
-
-# 第二步 初识mysql —— 数据类型
-1.在我们学习js的时候通常会先学习数据类型
-
-    mysql中有以下几类数据类型。
-    1.数值类型
-    2.字符类型
-    3.时间类型
-
-2.1 数值类型
-| 类型     | 无符号范围 | 有符号范围 |    用途  |
-|----------|------------|------------|----------|
-| TINYINT  | (-128，127)| (0，255)   | 小整数
-| TINYINT	|	0 ~ 2⁸-1|	-2⁷ ~ 2⁷-1|	非常小的整数
-|SMALLINT	|	0 ~ 2¹⁶-1|	-2¹⁵ ~ 2¹⁵-1|	小的整数
-|MEDIUMINT	|	0 ~ 2²⁴-1|	-2²³ ~ 2²³-1|	中等大小的整数
-|INT（别名：INTEGER）	4|	0 ~ 2³²-1	|-2³¹ ~ 2³¹-1	|标准的整数
-|BIGINT	|	0 ~ 2⁶⁴-1|	-2⁶³ ~ 2⁶³-1	|大整数
-|FLOAT	|	±1.175494351E-38|	±3.402823466E+38|	单精度浮点数
-|DOUBLE	|	±2.2250738585072014E-308|	±1.7976931348623157E+308|	双精度浮点数
-
-2.2字符类型
-
-|类型	|大小	|用途 |
-|-------|-------|-----|
-|CHAR|	0-255字节	|定长字符串
-|VARCHAR	|0-65535 字节|	变长字符串
-|TINYBLOB	|0-255字节	|不超过 255 个字符的二进制字符串
-|TINYTEXT	|0-255字节	|短文本字符串
-|BLOB|	0-65 535字节|	二进制形式的长文本数据
-|TEXT|	0-65 535字节|	长文本数据
-|MEDIUMBLOB	|0-16 777 215字节|	二进制形式的中等长度文本数据
-|MEDIUMTEXT	|0-16 777 215字节|	中等长度文本数据
-|LONGBLOB|	0-4 294 967 295字节	|二进制形式的极大文本数据
-|LONGTEXT|	0-4 294 967 295字节|	极大文本数据
-
-2.3 时间类型
-|类型|	大小(字节)|	范围	|格式|	用途|
-|----|------------|---------|----|------|
-|DATE	|3|	1000-01-01/9999-12-31|	YYYY-MM-DD	|日期值
-|TIME	|3|	'-838:59:59'/'838:59:59'|	HH:MM:SS|	时间值或持续时间
-|YEAR	|1|	1901/2155|	YYYY|	年份值
-|DATETIME|	8|	1000-01-01 00:00:00/9999-12-31| 23:59:59	YYYY-MM-DD HH:MM:SS	|混合日期和时间值
-|TIMESTAMP|	4|	|1970-01-01 00:00:00/2038|结束时间是第 2147483647 秒，北京时间 2038-1-19 11:14:07，格林尼治时间 2038年1月19日 凌晨 03:14:07|YYYYMMDD HHMMSS	混合日期和时间值，时间戳
-
-# 第三步骤基本操作
-
-## 3.1 数据库操作
-### 3.1.1 查询数据库;
-
-    # 语法：SHOW DATABASES; 别忘记分号结尾;
-    mysql> SHOW DATABASES;
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | information_schema |
-    | koa                |
-    | mysql              |
-    | performance_schema |
-    | sys                |
-    +--------------------+
-    5 rows in set (0.01 sec)
-
-### 3.1.2 创建数据库
-
-    # 语法：CREATE DATABASE 库名;
-    mysql> CREATE DATABASE test;
-    Query OK, 1 row affected (0.01 sec)
-
-    mysql> show databases;
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | information_schema |
-    | koa                |
-    | mysql              |
-    | performance_schema |
-    | sys                |
-    | test               |
-    +--------------------+
-    6 rows in set (0.00 sec)
-
-### 3.1.3 删除数据库
-
-     # 语法：DROP DATABASE 库名;
-     mysql> DROP DATABASE test;
-    Query OK, 0 rows affected (0.01 sec)
-
-    mysql> show databases;
-    +--------------------+
-    | Database           |
-    +--------------------+
-    | information_schema |
-    | koa                |
-    | mysql              |
-    | performance_schema |
-    | sys                |
-    +--------------------+
-
-    iv. 使用数据库
-    # 语法：USE 库名;
+上一篇中我们讲诉了一些数据库数据表的基本操作，这节讲诉一下列的属性，比如：PRIMARY KEY
 
 
-当我们创建和删除的时候可能会需要判断是否存在，再进行操作可以使用**IF NOT EXISTS** 和**IF EXISTS**，否则会报错
+## 默认值
+很多时候，我们创建一个表的是列属性的时候需要给一个默认值，例如默认头像，默认年龄；默认值的属性是**default**
 
-    例如：
-    // 不存再的时候才创建
-    CREATE DATABASE IF NOT EXISTS test
-    // 存在才删除
-    DROP DATABASE IF EXISTS test
+```
+# 语法
+列名 类型 default 默认值
+CREATE TABLE demo1(id INT, name VARCHAR(80), age INT default 18);
+Query OK, 0 rows affected (0.01 sec)
 
+mysql> DESC demo1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(80) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | 18      |       |
++-------+-------------+------+-----+---------+-------+
 
-## 3.2 数据表操作
+INSERT INTO demo1(id, name) VALUES (1, 'hmm'), (2, 'xhh');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
 
-### 3.2.1 查看表
-
-    # 语法：SHOW TABLES;
-    使用刚刚创建的test，空的;
-    mysql> use test;
-        Database changed
-    mysql> show tables;
-        Empty set (0.00 sec)
-
-### 3.2.2 创建表
-    创建表需要三部：
-        1.给表起名字
-        2.至少有一列，并且有数据类型
-        3.如果有必要设置一些属性，比如不能为空等等
-
-        下面我们创建一个简单的用户表；
-        CREATE TABLE users (
-            id INT NOT NULL,
-            name VARCHAR(50)
-        )
-### 3.2.3 查看表结构
-        # 语法：DESC 表名；
-        mysql> desc user;
-        +-------+-------------+------+-----+---------+-------+
-        | Field | Type        | Null | Key | Default | Extra |
-        +-------+-------------+------+-----+---------+-------+
-        | id    | int         | NO   |     | NULL    |       |
-        | name  | varchar(50) | YES  |     | NULL    |       |
-        +-------+-------------+------+-----+---------+-------+
-        2 rows in set (0.01 sec)
-### 3.2.4 插入一条数据
-        # 语法：分属性插入，INSERT INTO 表名 (field1, field2...) VALUES (1, 2, n...);
-        全属性插入，INSERT INTO 表名 VALUES (1, 2, n...);
-        mysql> INSERT INTO user (id, name) VALUES(1, '名字');
-        Query OK, 1 row affected (0.00 sec)
-### 3.2.5 查看插入的数据
-        # 语法：SELECT * FROM 表名;
-        mysql> select * from user;
-        +----+--------+
-        | id | name   |
-        +----+--------+
-        |  1 | 章三   |
-        |  1 | 名字   |
-        +----+--------+
-### 3.2.6 插入多条数据
-        # 语法：INSERT INTO 表名 (field1, field2...) VALUES (1, 2, n...)，(3, 4, 2n...);
-        mysql> INSERT INTO user (id, name) VALUES(1, '名字'), (2, '武松打虎');
-
-### 3.2.7 修改数据
-        # 语法：UPDATE 表名 SET 属性 = 新值 WHERE 属性 = 值
-        mysql> UPDATE user SET name = '姓名' WHERE name = '名字';
-        mysql> select * from user;
-        +----+--------+
-        | id | name   |
-        +----+--------+
-        |  1 | 章三   |
-        |  1 | 姓名   |
-        +----+--------+
-
-### 3.2.8 删除数据
-        # 语法：DELETE FROM 表名 [WHERE 表达式];
-        mysql> DELETE FROM user WHERE name = '姓名';
-        Query OK, 1 row affected (0.00 sec)
-
-        mysql> select * from user;
-        +----+--------+
-        | id | name   |
-        +----+--------+
-        |  1 | 章三   |
-        +----+--------+
-
-### 3.2.9 修改表名
-    # 语法ALTER: 单表修改 ALTER TABLE 旧表名 RENAME TO 新表名;
-    多表修改 RENAME TABLE 旧表名1 TO 新表名1, 旧表名2 TO 新表名2, ... 旧表名n TO 新表名n;
-    mysql> ALTER TABLE user RENAME TO users;
-    mysql> show tables;
-    +----------------+
-    | Tables_in_test |
-    +----------------+
-    | users          |
-    +----------------+
-
-### 3.2.10 增加列
-    # 语法ALTER: ALTER TABLE 表名 ADD COLUMN 列名 数据类型 [列的属性];
-    mysql> ALTER TABLE users ADD COLUMN age INT;
-
-    mysql> desc users;
-    +-------+-------------+------+-----+---------+-------+
-    | Field | Type        | Null | Key | Default | Extra |
-    +-------+-------------+------+-----+---------+-------+
-    | id    | int         | NO   |     | NULL    |       |
-    | name  | varchar(50) | YES  |     | NULL    |       |
-    | age   | int         | YES  |     | NULL    |       |
-    +-------+-------------+------+-----+---------+-------+
-
-### 3.2.11 指定位置新增列
-    在最前面添加
-    # 语法ALTER: ALTER TABLE 表名 ADD COLUMN 列名 列的类型 [列的属性] FIRST；
-    mysql> ALTER TABLE users ADD COLUMN gender INT FIRST;
-
-    在指定位置添加
-    # 语法ALTER: ALTER TABLE 表名 ADD COLUMN 列名 列的类型 [列的属性] AFTER；
-    mysql> ALTER TABLE users ADD COLUMN address INT AFTER id;
-
-### 3.2.12 删除列
-    # 语法ALTER: ALTER TABLE 表名 DROP COLUMN 列名;
-    mysql> ALTER TABLE user DROP address;
-
-### 3.2.13 修改列信息
-    # 语法ALTER: ALTER TABLE 表名 MODIFY 列名 新数据类型 [新属性];
-    mysql> ALTER TABLE user MODIFY name varchar(80) not null;
+mysql> SELECT * FROM demo1;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | hmm  |   18 |
+|    2 | xhh  |   18 |
++------+------+------+
+```
+通过上面的例子可以看出，我并没有插入年纪，但是查询出来的表有age=18;这就是默认值。
 
 
-后面还会更新，查询，自查询，分组查询等等～写的不对的地方，请指正。
+## NOT NULL属性
+有时候我们需要固定某属性，不能为空，是必填项，这时候就需要用到**not null**属性。
+```
+# 语法：列名 类型 NOT NULL
+ALTER TABLE demo1 ADD COLUMN gende INT NOT NULL;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC demo1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(80) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | 18      |       |
+| gende | int         | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+可以看到 gende 这个列属性的NUll 变成了NO，我们可以尝试插入一条数据，且gende不设置，
+看看结果怎么样，在尝试插入一条正确的数据，可以自行尝试。
+```
+
+## 主键
+很多时候一个表中的数据，我们不希望每条数据的某一列属性重复，这时候就需要设置一个主键，比如：身份证号码。
+```
+# 语法：列名 类型 PRIMARY KEY / PRIMARY KEY（列名）
+# 设置已有的字段为主键：ALTER TABLE 表名 ADD primary key(列名);
+我们设置id为主键
+alter table demo1 add primary key(id);
+
+INSERT INTO demo1(id, name, gende) VALUES(1, 'hh', 1);
+ERROR 1062 (23000): Duplicate entry '1' for key 'demo1.PRIMARY'
+当我们插入id为'1'的数据的时候，就会报错；
+
+重新插入没有重复id的数据就ok了；
+INSERT INTO demo1(id, name, gende) VALUES(6, 'hh', 1);
+
+INSERT INTO demo1(id, name, gende) VALUES(7, 'hh', 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from demo1;
++----+--------+------+-------+
+| id | name   | age  | gende |
++----+--------+------+-------+
+|  1 | hmm    |   18 |     0 |
+|  2 | xhh    |   18 |     0 |
+|  4 | 小白   |   18 |     1 |
+|  6 | hh     |   18 |     1 |
+|  7 | hh     |   18 |     1 |
++----+--------+------+-------+
+
+```
+需要说明的是，添加的主键后会自动设置 **NOT NULL**，且一个表只能有一个主键。 属性，所以不能没有值，否则会报错。
+
+## UIQUE属性
+上面提到了一个表只能有一个主键，但是我有多个信息是不能有重复的那该怎么办呢？这时候UNIQUE属性就诞生了。
+
+```
+# 语法
+1.创建表的时候单个列： 列名 类型 UNIUQUE;
+2.如果是多个列需要单独提取出：UNIQUE KEY 约束名 (列1，列2，列3)
+=> UNIQUE KEY group_unique (id, name, ...)
+3.对于已经存在的表：ALTER TABLE  表名 ADD unique(列1，列2);
+
+## 设置name为unique key
+ALTER TABLE demo1 ADD unique(name);
+mysql> select * from demo1;
++----+-----------+------+-------+
+| id | name      | age  | gende |
++----+-----------+------+-------+
+|  1 | hmm       |   18 |     0 |
+|  2 | xhh       |   18 |     0 |
+|  4 | 小白      |   18 |     1 |
+|  6 | xiaohuang |   18 |     2 |
++----+-----------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into demo1(id, name, gende) values(7, 'xhh', 2);
+// 在插入name=xhh的数据 就会报错了
+ERROR 1062 (23000): Duplicate entry 'xhh' for key 'demo1.name'
+
+注意：id没有连续，是因为如果报错了，也会生成一个浪费一个自增值，下次正确的从错误的开始自增
+```
+
+## AUTO_INCREMENT自增
+自增的意思就是会自动增长，当初始值为null或者0的时候，每次插入一条数据，设置为自增的字段，都会自动增长1；
+
+```
+# 语法
+1.创建表的时候单个列： 列名 类型 AUTO_INCREMENT自增;
+2.对于已经存在的表：ALTER TABLE 表名 modify id INT AUTO_INCREMENT;
+
+// 增加一个num2的列，设置自增和唯一，必须设置一个key，否则无法设置自增；
+ALter table demo1 add column num2 INT AUTO_INCREMENT UNIQUE;
+Query OK, 0 rows affected (0.14 sec)
+
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    |                |
+| name  | varchar(80) | YES  | UNI | NULL    |                |
+| age   | int         | YES  |     | 18      |                |
+| gende | int         | NO   |     | NULL    |                |
+| num   | int         | YES  |     | NULL    |                |
+| num2  | int         | NO   | UNI | NULL    | auto_increment |
++-------+-------------+------+-----+---------+----------------+
+
+查询结果可以看到num2自增了，可以自己试一试插入一条数据，看看num2的变化：
+mysql> select * from demo1;
++----+-----------+------+-------+------+------+
+| id | name      | age  | gende | num  | num2 |
++----+-----------+------+-------+------+------+
+|  1 | hmm       |   18 |     0 | NULL |    1 |
+|  2 | xhh       |   18 |     0 | NULL |    2 |
+|  4 | 小白      |   18 |     1 | NULL |    3 |
+|  6 | xiaohuang |   18 |     2 | NULL |    4 |
++----+-----------+------+-------+------+------+
+4 rows in set (0.00 sec)
+
+```
+
+# 简单查询
+在此之前，我们复习一下前面的所学内容；
+```
+1.创建一个库表，表中包含字段，id, name，gender, address, age
+2.其中id为主键，自增，name为字符串，gender有默认值，默认值为1，
+并且有评论，1为男，2为女，address唯一，age默认为18
+3.插入若干条数据
+4.发现漏了一个字段，字段为class,类型在字符串限定，10个字符，不能为空，插入在name的右边
+5.修改第五个的名字
+```
+做完上面的内容得到以下表结构：
+
+```
+mysql> desc demo3;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20)  | NO   |     | 18      |                |
+| class   | varchar(10)  | NO   |     | NULL    |                |
+| gender  | int          | YES  |     | 1       |                |
+| address | varchar(200) | YES  | UNI | NULL    |                |
+| age     | int          | YES  |     | 18      |                |
++---------+--------------+------+-----+---------+----------------+
+
+数据内容如下：
+mysql> select * from demo3;
++----+-----------------+-----------+--------+---------+------+
+| id | name            | class     | gender | address | age  |
++----+-----------------+-----------+--------+---------+------+
+|  1 | 小明            |           |      1 | xxxxx   |   17 |
+|  3 | 小红            |           |      1 | xxxxx1  |   18 |
+|  5 | 小红2           | 一年级    |      1 | xxxxx3  |   17 |
+|  6 | 小红3           | 一年级    |      1 | xxxx53  |   17 |
+|  8 | 修改的名字      | 一年级    |      1 | xxx43   |   17 |
+| 10 | 小红6           | 二年级    |      2 | xxx8    |   17 |
+| 11 | 小红7           | 二年级    |      2 | xxx81   |   19 |
++----+-----------------+-----------+--------+---------+------+
+```
+
+<!--<font color="#ff502c" bgcolor="#444444">浅红色文字：</font>-->
+
+## 查询所有列内容
+```
+select * from 表名 不多诉说
+```
+## 查询单/多列内容
+```
+select 列名 from 表名 =》 select id from demo3;
+
+select 列名1, 列名2 from 表名 =》select id, name from demo3;
+
+## 添加别名
+select 列名1 as 别名, 列名2 as 别名2 from 表名 =》
+select id as 唯一号码, name as 名字 from demo3;
+
+mysql> select id as 唯一号码, name as 名字 from demo3;
++--------------+-----------------+
+| 唯一号码     | 名字            |
++--------------+-----------------+
+|            1 | 小明            |
+|            3 | 小红            |
+|            5 | 小红2           |
+|            6 | 小红3           |
+|            8 | 修改的名字      |
+|           10 | 小红6           |
+|           11 | 小红7           |
++--------------+-----------------+
+```
+
+## 查询结果去重
+```
+语法：SELECT DISTINCT 列名 FROM 表名;
+SELECT DISTINCT class from demo3;
+
+mysql> SELECT DISTINCT class from demo3;
++-----------+
+| class     |
++-----------+
+|           |
+| 一年级    |
+| 二年级    |
++-----------+
+可以看到class只剩下一年级二年级了
+
+```
+## 限制查询条数
+这也是我们经常做分页用到的。比如每次只查询20条;
+
+```
+语法：LIMIT 开始行, 限制条数;
+mysql> select * from demo3 limit 0,2;
++----+--------+-------+--------+---------+------+
+| id | name   | class | gender | address | age  |
++----+--------+-------+--------+---------+------+
+|  1 | 小明   |       |      1 | xxxxx   |   17 |
+|  3 | 小红   |       |      1 | xxxxx1  |   18 |
++----+--------+-------+--------+---------+------+
+```
+
+## 按照单个列的值进行排序
+
+```
+## ASC是升序 DESC是降序
+语法：ORDER BY 列名 ASC|DESC
+
+mysql> select * from demo3 order by age asc;
++----+-----------------+-----------+--------+---------+------+
+| id | name            | class     | gender | address | age  |
++----+-----------------+-----------+--------+---------+------+
+|  1 | 小明            |           |      1 | xxxxx   |   17 |
+|  5 | 小红2           | 一年级    |      1 | xxxxx3  |   17 |
+|  6 | 小红3           | 一年级    |      1 | xxxx53  |   17 |
+|  8 | 修改的名字      | 一年级    |      1 | xxx43   |   17 |
+| 10 | 小红6           | 二年级    |      2 | xxx8    |   17 |
+|  3 | 小红            |           |      1 | xxxxx1  |   18 |
+| 11 | 小红7           | 二年级    |      2 | xxx81   |   19 |
++----+-----------------+-----------+--------+---------+------+
+```
+
+## 按照多个列的值进行排序
+```
+## ASC是升序 DESC是降序
+语法：ORDER BY 列名1 ASC|DESC, 列名2 ASC|DESC....
+
+
+mysql> select * from demo3 order by age asc, address asc;
++----+-----------------+-----------+--------+---------+------+
+| id | name            | class     | gender | address | age  |
++----+-----------------+-----------+--------+---------+------+
+|  8 | 修改的名字      | 一年级    |      1 | xxx43   |   17 |
+| 10 | 小红6           | 二年级    |      2 | xxx8    |   17 |
+|  6 | 小红3           | 一年级    |      1 | xxxx53  |   17 |
+|  1 | 小明            |           |      1 | xxxxx   |   17 |
+|  5 | 小红2           | 一年级    |      1 | xxxxx3  |   17 |
+|  3 | 小红            |           |      1 | xxxxx1  |   18 |
+| 11 | 小红7           | 二年级    |      2 | xxx81   |   19 |
++----+-----------------+-----------+--------+---------+------+
+```
+根据以上可以查询出最小和最大
