@@ -14,20 +14,55 @@
     </style>
 </head>
 <body>
-    测试
     <div id='table'>
         <canvas id="canvas">
 
         </canvas>
     </div>
 </body>
-
+<script src="https://cdn.bootcss.com/require.js/2.3.6/require.js"></script>
+<script src="./config.js"></script>
 <script src="./index.js"></script>
 
 <script>
     const tableData = {
-        headers: [{label: '姓名'}, {label: '年纪'}, {label: '地区'}]
+        startPosition: {
+            x: 50,
+            y: 50
+        },
+        ID: 'canvas',
+        data: {
+            headers: [{label: '姓名', key: 'name'}, {label: '年纪', key: 'age'}, {label: '地区', key: 'area'}, {label: '性别', key: 'gender'}],
+            tableDatas: [{
+                name: '小红',
+                age: '18',
+                test: '1',
+                area: '广东',
+                test2: '2',
+                gender: '男',
+                test3: '1'
+            }, {
+                name: '小红',
+                age: '19',
+                test: '1',
+                area: '广东',
+                test2: '2',
+                gender: '男',
+                test3: '1'
+            }, {
+                name: '小红',
+                age: '20',
+                test: '1',
+                area: '广东',
+                test2: '2',
+                gender: '男',
+                test3: '1'
+            }]
+        }
     }
-    new DrawTable({ID: 'canvas', DATA: tableData}).init()
+    setTimeout(() => {
+        new DrawTable(tableData).init()
+
+    }, 100)
 </script>
 </html>
