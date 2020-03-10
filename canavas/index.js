@@ -67,6 +67,8 @@
             startDrawTableBody () {
                 const data = config.data.tableDatas || []
                 const headers = config.data.headers || []
+
+                console.log(data)
                 const { ctx } = this
                 ctx.beginPath()
 
@@ -80,15 +82,24 @@
                 // 设置垂直对齐方式
                 ctx.textBaseline = "middle";
                 headers.forEach((header, h_index) => {
-                    ctx.moveTo(this.startPosition.x + h_index * this.columnWidth, this.startPosition.y + data.length * this.columnHeight)
-                    
-                    // 绘制表格
+                    ctx.moveTo(this.startPosition.x + (h_index + 1) * this.columnWidth, this.startPosition.y + this.columnHeight)
+                    ctx.lineTo(this.startPosition.x + (h_index + 1) * this.columnWidth, this.startPosition.y + (data.length + 1) * this.columnHeight)
+                })
+
+                data.forEach((d, index) => {
+                    ctx.moveTo(this.startPosition.x, this.startPosition.y + (index + 1) * this.columnHeight)
+                    ctx.lineTo(this.startPosition.x + headers.length * this.columnWidth, this.startPosition.y + (index + 1) * this.columnHeight)
+                    headers.forEach((header, h_index) => {
+                        ctx.fillText(d[header.key], this.startPosition.x + (h_index + 0.5) * this.columnWidth, this.startPosition.y + (index + 1.5) * this.columnHeight, this.columnWidth * 0.85)
+                    })
                 })
                 ctx.stroke()
             }
         }
-
-        console.log(DrawTable)
+        let delOverText = function(text) {
+            console.log(text)
+            return text
+        }
         window.DrawTable = window.DrawTable || DrawTable
     })
 })(window)
