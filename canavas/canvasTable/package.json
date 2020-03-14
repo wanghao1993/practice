@@ -1,0 +1,28 @@
+{
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "webpack": "^4.42.0",
+    "webpack-chain": "^6.4.0",
+    "webpack-clean-plugin": "^0.2.3",
+    "webpack-cli": "^3.3.11"
+  },
+  "name": "canvastable",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "_deepmerge@1.5.2@deepmerge": "^1.5.2",
+    "_javascript-stringify@2.0.1@javascript-stringify": "^2.0.1",
+    "_webpack-chain@6.4.0@webpack-chain": "^6.4.0",
+    "_webpack@4.42.0@webpack": "^4.42.0",
+    "javascript-stringify": "^2.0.1",
+    "_enhanced-resolve@4.1.1@enhanced-resolve": "^4.1.1",
+    "deepmerge": "^1.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack webpack.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
