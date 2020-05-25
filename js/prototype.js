@@ -19,6 +19,7 @@ const xiaohong = new Son()
 
 console.log(xiaohong.colors === xiaoming.colors, '相等吗')
 
+
 // 缺点
 // 从中我们能看到一个明显的确定，当继承父类的属性中存在引用类型的数据就会出问题。当我修改一个实例的时候 另一个实例也发生了改变
 
