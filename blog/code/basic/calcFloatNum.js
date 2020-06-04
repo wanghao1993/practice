@@ -1,27 +1,36 @@
-class transform {
-    constructor (num) {
-        if (typeof num === 'number' && !isNaN(num)) {
-            this.num = num
-        } else {
-            throw Error('arg must be a number')
-        }
+function transform (num1, num2, type) {
+    const typeList = ['add', 'min', 'multi', 'divide']
+    if (!num1 || !num2 || !type) {
+        throw Error('num1 & num2 & type are required')
     }
+
+    if (!typeList.includes(type)) {
+        throw Error("There are four types can be accepted 'add', 'min', 'multi', 'divide'")
+    }
+
+    let maxLen = 0
+    let copyNum1 = 0
+    let copyNum2 = 0
     
-    _isInterger () {
-        return Math.floor(this.num) === this.num
-    }
+    let l = num1.toString().split('.').length > 2 ? num1.toString().split('.')[1].length : 0
+    let r = num2.toString().split('.').length > 2 ? num2.toString().split('.')[1].length : 0
+    maxLen = l < r ? r : l
+    copyNum1 = floatToInt(num1, maxLen)
+    copyNum2 = floatToInt(num2, maxLen)
 
-    floatToInt () {
-        if (this._isInterger()) {
-            return this.num
-        }
-        const len = this.num.toString().split('.')[1].length
-        return this.num * Math.pow(10, len)
-    }
-
-    intToFloat (number, len) {
-        return number / Math.pow(10, len)
+    if (type === 'add') {
+        return (copyNum2 + copyNum1) / Math.pow(10, maxLen)
+    } else if (type === 'min') {
+        return (copyNum1 - copyNum2) / Math.pow(10, maxLen)
+    } else if (type === 'divide') {
+        return copyNum1 / copyNum2
+    } else if (type === 'multi') {
+        return (copyNum1 * copyNum2) / Math.pow(Math.pow(10, maxLen), 2)
     }
 }
 
-console.log((new transform(1.2).floatToInt() / new transform(1.6).floatToInt()))
+function floatToInt (num, len) {
+    return num * Math.pow(10, len)
+}
+
+console.log(transform(1, 2, 'add'))
